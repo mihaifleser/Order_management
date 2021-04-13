@@ -29,8 +29,8 @@ public class AbstractDAO<T> {
     private final Class<T> type;
 
     @SuppressWarnings("unchecked")
-    public AbstractDAO() {
-        this.type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    public AbstractDAO(Class<T> type) {
+        this.type = type;
 
     }
 
@@ -44,8 +44,25 @@ public class AbstractDAO<T> {
         return sb.toString();
     }
 
-    public List<T> findAll() {
-        // TODO:
+    public ArrayList<T> findAll() {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String query = "Select * from " + type.getSimpleName();
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+
+            return createObjects(resultSet);
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, type.getName() + "DAO:findById " + e.getMessage());
+        } finally {
+            ConnectionFactory.close(resultSet);
+            ConnectionFactory.close(statement);
+            ConnectionFactory.close(connection);
+        }
         return null;
     }
 
@@ -71,9 +88,8 @@ public class AbstractDAO<T> {
         return null;
     }
 
-    private List<T> createObjects(ResultSet resultSet) {
-        List<T> list = new ArrayList<T>();
-
+    private ArrayList<T> createObjects(ResultSet resultSet) {
+        ArrayList<T> list = new ArrayList<T>();
         try {
             while (resultSet.next()) {
                 T instance = type.newInstance();

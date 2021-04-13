@@ -6,6 +6,11 @@ public class Product {
     private Integer price;
     private Integer quantity;
 
+    public Product()
+    {
+
+    }
+
     public Product(Integer id, String name, Integer price, Integer quantity)
     {
         this.id = id;

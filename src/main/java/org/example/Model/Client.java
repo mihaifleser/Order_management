@@ -6,6 +6,13 @@ public class Client {
     private String lastName;
     private String email;
     private String telephone;
+    private String address;
+
+
+    public Client()
+    {
+
+    }
 
     public Client(Integer id, String firstName, String lastName, String email, String telephone)
     {
@@ -18,6 +25,11 @@ public class Client {
 
     public Integer getId() {
         return id;
+    }
+
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -60,9 +72,4 @@ public class Client {
         this.address = address;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    private String address;
 }

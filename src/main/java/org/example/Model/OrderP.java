@@ -1,12 +1,17 @@
 package org.example.Model;
 
-public class Order {
+public class OrderP {
     private Integer id;
     private Integer clientId;
     private Integer productId;
     private Integer quantity;
 
-    public Order(Integer id, Integer clientId, Integer productId, Integer quantity)
+    public OrderP()
+    {
+
+    }
+
+    public OrderP(Integer id, Integer clientId, Integer productId, Integer quantity)
     {
         this.id = id;
         this.clientId = clientId;
