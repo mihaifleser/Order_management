@@ -10,18 +10,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.mysql.cj.util.StringUtils;
 import org.example.DataAccess.ConnectionFactory;
 
-/**
- * @Author: Technical University of Cluj-Napoca, Romania Distributed Systems
- *          Research Laboratory, http://dsrl.coned.utcluj.ro/
- * @Since: Apr 03, 2017
- * @Source http://www.java-blog.com/mapping-javaobjects-database-reflection-generics
- */
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 public class AbstractDAO<T> {
     protected static final Logger LOGGER = Logger.getLogger(AbstractDAO.class.getName());
 
@@ -63,6 +62,57 @@ public class AbstractDAO<T> {
             ConnectionFactory.close(connection);
         }
         return null;
+    }
+
+    public void refreshTable(JTable table)
+    {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        ArrayList<T> elements = findAll();
+
+        model.setRowCount(0);
+        for(T element: elements)
+        {
+            LinkedList<Object> data = new LinkedList<>();
+            for(Field field: type.getDeclaredFields())
+            {
+                field.setAccessible(true);
+                try {
+                    Object value = field.get(element);
+                    data.add(value.toString());
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            model.addRow(data.toArray());
+        }
+
+    }
+
+    public void setTable(JTable table)
+    {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        ArrayList<T> elements = findAll();
+        for (Field field : type.getDeclaredFields())
+        {
+            model.addColumn(field.getName());
+        }
+
+        for(T element: elements)
+        {
+            LinkedList<Object> data = new LinkedList<>();
+            for(Field field: type.getDeclaredFields())
+            {
+                field.setAccessible(true);
+                try {
+                    Object value = field.get(element);
+                    data.add(value.toString());
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            model.addRow(data.toArray());
+        }
+
     }
 
     public T findById(int id) {

@@ -2,6 +2,7 @@ package org.example.Presentation;
 
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -12,9 +13,33 @@ public class GUI {
     private JButton refreshClients=new JButton("Refresh Clients");
     private JButton addClient=new JButton("Add Client");
     private JButton editClient=new JButton("Edit Client");
+    private JButton deleteClient=new JButton("Delete Client");
     private JButton refreshProducts=new JButton("Refresh Products");
     private JButton addProduct=new JButton("Add Product");
     private JButton editProduct=new JButton("Edit Product");
+    private JButton deleteProduct=new JButton("Delete Product");
+    private JTable clientsTable = new JTable(new DefaultTableModel());
+    private JTable productsTable = new JTable(new DefaultTableModel());
+
+    public JTable getClientsTable()
+    {
+        return clientsTable;
+    }
+
+    public void setActionOnRefreshClientsButton(ActionListener actionListener)
+    {
+        refreshClients.addActionListener(actionListener);
+    }
+
+    public void setActionOnRefreshProductsButton(ActionListener actionListener)
+    {
+        refreshProducts.addActionListener(actionListener);
+    }
+
+    public JTable getProductsTable()
+    {
+        return productsTable;
+    }
 
     public GUI()
     {
@@ -71,6 +96,7 @@ public class GUI {
         orderPanel.add(madeByLabel2);
         productPanel.add(madeByLabel3);
 
+
         addClient.setBounds(leftMargin,titleLabel1.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
         addClient.setBackground(buttonColor);
         addClient.setFont(new Font(Font.SERIF,  Font.BOLD, 16));
@@ -83,11 +109,21 @@ public class GUI {
         editClient.setForeground(Color.white);
         clientPanel.add(editClient);
 
-        refreshClients.setBounds(leftMargin,editClient.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
+        deleteClient.setBounds(leftMargin,editClient.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
+        deleteClient.setBackground(buttonColor);
+        deleteClient.setFont(new Font(Font.SERIF,  Font.BOLD, 16));
+        deleteClient.setForeground(Color.white);
+        clientPanel.add(deleteClient);
+
+        refreshClients.setBounds(leftMargin,deleteClient.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
         refreshClients.setBackground(buttonColor);
         refreshClients.setFont(new Font(Font.SERIF,  Font.BOLD, 16));
         refreshClients.setForeground(Color.white);
         clientPanel.add(refreshClients);
+
+        JScrollPane sp = new JScrollPane(clientsTable);
+        sp.setBounds(addClient.getX() + labelWidth,addClient.getY(),700,500);
+        clientPanel.add(sp);
 
         addProduct.setBounds(leftMargin,titleLabel1.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
         addProduct.setBackground(buttonColor);
@@ -101,12 +137,21 @@ public class GUI {
         editProduct.setForeground(Color.white);
         productPanel.add(editProduct);
 
-        refreshProducts.setBounds(leftMargin,editClient.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
+        deleteProduct.setBounds(leftMargin,editClient.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
+        deleteProduct.setBackground(buttonColor);
+        deleteProduct.setFont(new Font(Font.SERIF,  Font.BOLD, 16));
+        deleteProduct.setForeground(Color.white);
+        productPanel.add(deleteProduct);
+
+        refreshProducts.setBounds(leftMargin,deleteProduct.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
         refreshProducts.setBackground(buttonColor);
         refreshProducts.setFont(new Font(Font.SERIF,  Font.BOLD, 16));
         refreshProducts.setForeground(Color.white);
         productPanel.add(refreshProducts);
 
+        JScrollPane sp2 = new JScrollPane(productsTable);
+        sp2.setBounds(addProduct.getX() + labelWidth,addProduct.getY(),700,500);
+        productPanel.add(sp2);
 
 
         clientPanel.setBackground(frameColor);

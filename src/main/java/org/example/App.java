@@ -43,11 +43,11 @@ public class App
         //Product example = new Product("TV LG", 1200,6);
         //pp.insert(example);
 
-        OrderP example = new OrderP(3, 2,4);
-        oo.insert(example);
+        //OrderP example = new OrderP(3, 2,4);
+        //oo.insert(example);
 
-        //Controller controller = new Controller();
-        //controller.run();
+        Controller controller = new Controller();
+        controller.run();
 
 
 
