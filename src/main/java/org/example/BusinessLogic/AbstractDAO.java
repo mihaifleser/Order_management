@@ -64,57 +64,6 @@ public class AbstractDAO<T> {
         return null;
     }
 
-    public void refreshTable(JTable table)
-    {
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        ArrayList<T> elements = findAll();
-
-        model.setRowCount(0);
-        for(T element: elements)
-        {
-            LinkedList<Object> data = new LinkedList<>();
-            for(Field field: type.getDeclaredFields())
-            {
-                field.setAccessible(true);
-                try {
-                    Object value = field.get(element);
-                    data.add(value.toString());
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-            model.addRow(data.toArray());
-        }
-
-    }
-
-    public void setTable(JTable table)
-    {
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        ArrayList<T> elements = findAll();
-        for (Field field : type.getDeclaredFields())
-        {
-            model.addColumn(field.getName());
-        }
-
-        for(T element: elements)
-        {
-            LinkedList<Object> data = new LinkedList<>();
-            for(Field field: type.getDeclaredFields())
-            {
-                field.setAccessible(true);
-                try {
-                    Object value = field.get(element);
-                    data.add(value.toString());
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-            model.addRow(data.toArray());
-        }
-
-    }
-
     public T findById(int id) {
         Connection connection = null;
         PreparedStatement statement = null;
