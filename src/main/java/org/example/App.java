@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.DAO.AbstractDAO;
+import org.example.BusinessLogic.AbstractDAO;
 import org.example.Model.Client;
 import org.example.Model.OrderP;
 import org.example.Model.Product;
@@ -12,29 +12,42 @@ public class App
 {
     public static void main( String[] args )
     {
+        AbstractDAO<Client> cc = new AbstractDAO(Client.class);
+        AbstractDAO<Product> pp = new AbstractDAO<>(Product.class);
+        AbstractDAO<OrderP> oo = new AbstractDAO(OrderP.class);
 
-        ArrayList<Client> clients = (new AbstractDAO<Client>(Client.class)).findAll();
+        ArrayList<Client> clients = cc.findAll();
         for(Client client:clients)
         {
             System.out.println(client.getFirstName());
         }
 
-        ArrayList<Product> products = (new AbstractDAO<Product>(Product.class)).findAll();
+        ArrayList<Product> products = pp.findAll();
         for(Product product:products)
         {
             System.out.println(product.getName());
         }
 
-        ArrayList<OrderP> orders = (new AbstractDAO<OrderP>(OrderP.class)).findAll();
+        ArrayList<OrderP> orders = oo.findAll();
         for(OrderP order:orders)
         {
             System.out.println(order.getQuantity());
         }
 
+        Product one = pp.findById(3);
+        System.out.println(one.getName());
 
+        //Client example = new Client("Arhimede","Paltinis", "ahrp@yahoo.com", "0765346575" ,"Fagaras");
+        //cc.insert(example);
 
-        Controller controller = new Controller();
-        controller.run();
+        //Product example = new Product("TV LG", 1200,6);
+        //pp.insert(example);
+
+        OrderP example = new OrderP(3, 2,4);
+        oo.insert(example);
+
+        //Controller controller = new Controller();
+        //controller.run();
 
 
 

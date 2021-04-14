@@ -19,6 +19,13 @@ public class OrderP {
         this.quantity = quantity;
     }
 
+    public OrderP(Integer clientId, Integer productId, Integer quantity)
+    {
+        this.clientId = clientId;
+        this.productId = productId;
+        this.quantity = quantity;
+    }
+
     public Integer getId() {
         return id;
     }

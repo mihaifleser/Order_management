@@ -14,14 +14,25 @@ public class Client {
 
     }
 
-    public Client(Integer id, String firstName, String lastName, String email, String telephone)
+    public Client(Integer id, String firstName, String lastName, String email, String telephone, String address)
     {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.telephone = telephone;
+        this.address = address;
     }
+
+    public Client(String firstName, String lastName, String email, String telephone, String address)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.telephone = telephone;
+        this.address = address;
+    }
+
 
     public Integer getId() {
         return id;
