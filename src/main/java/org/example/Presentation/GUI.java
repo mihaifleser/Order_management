@@ -19,6 +19,7 @@ public class GUI {
     private JButton editProduct=new JButton("Edit Product");
     private JButton deleteProduct=new JButton("Delete Product");
     private JButton deleteOrder=new JButton("Delete Order");
+    private JButton addOrder=new JButton("Add Order");
     private JTable clientsTable = new JTable(new DefaultTableModel(){@Override
     public boolean isCellEditable(int row, int col) {
         return col != 0;
@@ -42,6 +43,12 @@ public class GUI {
     public JFrame getFrame() {
         return frame;
     }
+
+    public void setActionOnAddOrderButton(ActionListener actionListener)
+    {
+        addOrder.addActionListener(actionListener);
+    }
+
 
     public void setActionOnRefreshClientsButton(ActionListener actionListener)
     {
@@ -206,14 +213,21 @@ public class GUI {
         sp2.setBounds(addProduct.getX() + labelWidth,addProduct.getY(),700,500);
         productPanel.add(sp2);
 
-        deleteOrder.setBounds(leftMargin,titleLabel3.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
+
+        addOrder.setBounds(leftMargin,titleLabel3.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
+        addOrder.setBackground(buttonColor);
+        addOrder.setFont(new Font(Font.SERIF,  Font.BOLD, 16));
+        addOrder.setForeground(Color.white);
+        orderPanel.add(addOrder);
+
+        deleteOrder.setBounds(leftMargin,addOrder.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
         deleteOrder.setBackground(buttonColor);
         deleteOrder.setFont(new Font(Font.SERIF,  Font.BOLD, 16));
         deleteOrder.setForeground(Color.white);
         orderPanel.add(deleteOrder);
 
         JScrollPane sp3 = new JScrollPane(orderTable);
-        sp3.setBounds(deleteOrder.getX() + labelWidth,deleteOrder.getY(),700,500);
+        sp3.setBounds(addOrder.getX() + labelWidth,addOrder.getY(),700,500);
         orderPanel.add(sp3);
 
 

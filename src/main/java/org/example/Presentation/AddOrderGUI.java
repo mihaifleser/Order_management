@@ -4,16 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class AddProductGUI {
+public class AddOrderGUI {
 
-    private JFrame frame = new JFrame("Insert new Product");
+    private JFrame frame = new JFrame("Add new Order");
 
-    private JTextArea name = new JTextArea();
-    private JTextArea price = new JTextArea();
+    private JTextArea clientId = new JTextArea();
+    private JTextArea productId = new JTextArea();
     private JTextArea quantity = new JTextArea();
     private JButton add = new JButton("ADD");
 
-    public AddProductGUI()
+    public AddOrderGUI()
     {
 
     }
@@ -23,14 +23,14 @@ public class AddProductGUI {
         add.addActionListener(actionListener);
     }
 
-    public String getName()
+    public String getClientId()
     {
-        return name.getText();
+        return clientId.getText();
     }
 
-    public String getPrice()
+    public String getProductId()
     {
-        return price.getText();
+        return productId.getText();
     }
 
     public String getQuantity()
@@ -53,27 +53,27 @@ public class AddProductGUI {
         int buttonWidth = width / 3;
         int buttonHeight = height / 8;
 
-        JLabel nameLabel = new JLabel("Name: ");
-        nameLabel.setFont(new Font(Font.SERIF,  Font.ITALIC, 18));
-        nameLabel.setBounds(leftMargin, labelHeight,labelWidth,labelHeight);
-        frame.add(nameLabel);
+        JLabel clientLabel = new JLabel("Insert Client Id: ");
+        clientLabel.setFont(new Font(Font.SERIF,  Font.ITALIC, 18));
+        clientLabel.setBounds(leftMargin, labelHeight,labelWidth * 2,labelHeight);
+        frame.add(clientLabel);
 
-        name.setFont(new Font(Font.SERIF,  Font.PLAIN, 17));
-        name.setBounds(nameLabel.getX(), nameLabel.getY() + labelHeight,labelWidth * 2,labelHeight - labelHeight / 3);
-        frame.add(name);
+        clientId.setFont(new Font(Font.SERIF,  Font.PLAIN, 17));
+        clientId.setBounds(clientLabel.getX(), clientLabel.getY() + labelHeight,labelWidth * 2,labelHeight - labelHeight / 3);
+        frame.add(clientId);
 
-        JLabel priceLabel = new JLabel("Price:");
-        priceLabel.setFont(new Font(Font.SERIF,  Font.ITALIC, 18));
-        priceLabel.setBounds(leftMargin, labelHeight * 3,labelWidth,labelHeight);
-        frame.add(priceLabel);
+        JLabel productLabel = new JLabel("Insert Product Id:");
+        productLabel.setFont(new Font(Font.SERIF,  Font.ITALIC, 18));
+        productLabel.setBounds(leftMargin, labelHeight * 3,labelWidth * 2,labelHeight);
+        frame.add(productLabel);
 
-        price.setFont(new Font(Font.SERIF,  Font.PLAIN, 17));
-        price.setBounds(priceLabel.getX(), priceLabel.getY() + labelHeight,labelWidth * 2,labelHeight - labelHeight / 3);
-        frame.add(price);
+        productId.setFont(new Font(Font.SERIF,  Font.PLAIN, 17));
+        productId.setBounds(productLabel.getX(), productLabel.getY() + labelHeight,labelWidth * 2,labelHeight - labelHeight / 3);
+        frame.add(productId);
 
-        JLabel quantityLabel = new JLabel("Quantity:");
+        JLabel quantityLabel = new JLabel("Insert Quantity:");
         quantityLabel.setFont(new Font(Font.SERIF,  Font.ITALIC, 18));
-        quantityLabel.setBounds(leftMargin, labelHeight * 5,labelWidth,labelHeight);
+        quantityLabel.setBounds(leftMargin, labelHeight * 5,labelWidth * 2,labelHeight);
         frame.add(quantityLabel);
 
         quantity.setFont(new Font(Font.SERIF,  Font.PLAIN, 17));

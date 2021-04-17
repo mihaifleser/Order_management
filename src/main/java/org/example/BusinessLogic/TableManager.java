@@ -79,4 +79,9 @@ public class TableManager<T> {
         abstractDAO.update(t);
     }
 
+    public T findById(int id)
+    {
+        return abstractDAO.findById(id);
+    }
+
 }

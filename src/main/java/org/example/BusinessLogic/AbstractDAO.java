@@ -74,7 +74,6 @@ public class AbstractDAO<T> {
             statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
-
             return createObjects(resultSet).get(0);
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, type.getName() + "DAO:findById " + e.getMessage());
@@ -114,6 +113,8 @@ public class AbstractDAO<T> {
         } catch (IntrospectionException e) {
             e.printStackTrace();
         }
+        if(list.size() == 0)
+            list.add(null);
         return list;
     }
 
