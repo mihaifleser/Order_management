@@ -18,12 +18,23 @@ public class GUI {
     private JButton addProduct=new JButton("Add Product");
     private JButton editProduct=new JButton("Edit Product");
     private JButton deleteProduct=new JButton("Delete Product");
+    private JButton deleteOrder=new JButton("Delete Order");
     private JTable clientsTable = new JTable(new DefaultTableModel());
     private JTable productsTable = new JTable(new DefaultTableModel());
+    private JTable orderTable = new JTable(new DefaultTableModel());
 
     public JTable getClientsTable()
     {
         return clientsTable;
+    }
+
+    public JTable getOrdersTable()
+    {
+        return orderTable;
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 
     public void setActionOnRefreshClientsButton(ActionListener actionListener)
@@ -31,10 +42,36 @@ public class GUI {
         refreshClients.addActionListener(actionListener);
     }
 
+    public void setActionOnAddClientButton(ActionListener actionListener)
+    {
+        addClient.addActionListener(actionListener);
+    }
+
+    public void setActionOnAddProductButton(ActionListener actionListener)
+    {
+        addProduct.addActionListener(actionListener);
+    }
+
     public void setActionOnRefreshProductsButton(ActionListener actionListener)
     {
         refreshProducts.addActionListener(actionListener);
     }
+
+    public void setActionOnDeleteClientButton(ActionListener actionListener)
+    {
+        deleteClient.addActionListener(actionListener);
+    }
+
+    public void setActionOnDeleteProductButton(ActionListener actionListener)
+    {
+        deleteProduct.addActionListener(actionListener);
+    }
+
+    public void setActionOnDeleteOrderButton(ActionListener actionListener)
+    {
+        deleteOrder.addActionListener(actionListener);
+    }
+
 
     public JTable getProductsTable()
     {
@@ -152,6 +189,16 @@ public class GUI {
         JScrollPane sp2 = new JScrollPane(productsTable);
         sp2.setBounds(addProduct.getX() + labelWidth,addProduct.getY(),700,500);
         productPanel.add(sp2);
+
+        deleteOrder.setBounds(leftMargin,titleLabel3.getY() + buttonHeight,buttonWidth, buttonHeight);//x axis, y axis, width, height
+        deleteOrder.setBackground(buttonColor);
+        deleteOrder.setFont(new Font(Font.SERIF,  Font.BOLD, 16));
+        deleteOrder.setForeground(Color.white);
+        orderPanel.add(deleteOrder);
+
+        JScrollPane sp3 = new JScrollPane(orderTable);
+        sp3.setBounds(deleteOrder.getX() + labelWidth,deleteOrder.getY(),700,500);
+        orderPanel.add(sp3);
 
 
         clientPanel.setBackground(frameColor);

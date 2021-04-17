@@ -172,6 +172,27 @@ public class AbstractDAO<T> {
         }
     }
 
+    public void deleteById(int id)
+    {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String query = "DELETE FROM " + type.getSimpleName() + " Where id = '" + id + "'";
+        System.out.println(query);
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.execute();
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, type.getName() + "DAO:deleteById " + e.getMessage());
+        } finally {
+            ConnectionFactory.close(resultSet);
+            ConnectionFactory.close(statement);
+            ConnectionFactory.close(connection);
+        }
+    }
+
     public T update(T t) {
         // TODO:
         return t;

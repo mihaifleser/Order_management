@@ -63,8 +63,16 @@ public class TableManager<T> {
             }
             model.addRow(data.toArray());
         }
-
     }
 
+    public void insertIntoDatabase(T t)
+    {
+        abstractDAO.insert(t);
+    }
+
+    public void deleteFromDatabase(int id)
+    {
+        abstractDAO.deleteById(id);
+    }
 
 }

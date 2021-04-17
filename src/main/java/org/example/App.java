@@ -37,6 +37,9 @@ public class App
         Product one = pp.findById(3);
         System.out.println(one.getName());
 
+        //cc.deleteById(15);
+        //pp.deleteById(5);
+
         //Client example = new Client("Arhimede","Paltinis", "ahrp@yahoo.com", "0765346575" ,"Fagaras");
         //cc.insert(example);
 
