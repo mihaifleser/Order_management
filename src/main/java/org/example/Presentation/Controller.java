@@ -58,6 +58,42 @@ public class Controller {
         productTableManager.deleteFromDatabase(id);
     }
 
+    private void editClient()
+    {
+        int row = gui.getClientsTable().getSelectedRow();
+        int col = 0;
+        String value = gui.getClientsTable().getModel().getValueAt(row, col).toString();
+        int id = Integer.valueOf(value);
+        value = gui.getClientsTable().getModel().getValueAt(row, col + 1).toString();
+        String firstName = value;
+        value = gui.getClientsTable().getModel().getValueAt(row, col + 2).toString();
+        String lastName = value;
+        value = gui.getClientsTable().getModel().getValueAt(row, col + 3).toString();
+        String email = value;
+        value = gui.getClientsTable().getModel().getValueAt(row, col + 4).toString();
+        String telephone = value;
+        value = gui.getClientsTable().getModel().getValueAt(row, col + 5).toString();
+        String address = value;
+        Client c = new Client(id,firstName,lastName,email,telephone,address);
+        clientTableManager.edit(c);
+    }
+
+    private void editProduct()
+    {
+        int row = gui.getProductsTable().getSelectedRow();
+        int col = 0;
+        String value = gui.getProductsTable().getModel().getValueAt(row, col).toString();
+        int id = Integer.valueOf(value);
+        value = gui.getProductsTable().getModel().getValueAt(row, col + 1).toString();
+        String firstName = value;
+        value = gui.getProductsTable().getModel().getValueAt(row, col + 2).toString();
+        int price = Integer.valueOf(value);
+        value = gui.getProductsTable().getModel().getValueAt(row, col + 3).toString();
+        int quantity = Integer.valueOf(value);
+        Product p = new Product(id,firstName,price,quantity);
+        productTableManager.edit(p);
+    }
+
     private void addProduct()
     {
         Product product = new Product(addProductGUI.getName(), Integer.valueOf(addProductGUI.getPrice()),Integer.valueOf(addProductGUI.getQuantity()));
@@ -137,6 +173,24 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 deleteOrder();
                 orderTableManager.refreshTable(gui.getOrdersTable());
+            }
+        });
+
+        gui.setActionOnEditClientsButton(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editClient();
+                clientTableManager.refreshTable(gui.getClientsTable());
+
+            }
+        });
+
+        gui.setActionOnEditProductsButton(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editProduct();
+                productTableManager.refreshTable(gui.getProductsTable());
+
             }
         });
 

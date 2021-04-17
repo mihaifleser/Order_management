@@ -19,8 +19,14 @@ public class GUI {
     private JButton editProduct=new JButton("Edit Product");
     private JButton deleteProduct=new JButton("Delete Product");
     private JButton deleteOrder=new JButton("Delete Order");
-    private JTable clientsTable = new JTable(new DefaultTableModel());
-    private JTable productsTable = new JTable(new DefaultTableModel());
+    private JTable clientsTable = new JTable(new DefaultTableModel(){@Override
+    public boolean isCellEditable(int row, int col) {
+        return col != 0;
+    }});
+    private JTable productsTable = new JTable(new DefaultTableModel(){@Override
+    public boolean isCellEditable(int row, int col) {
+        return col != 0;
+    }});
     private JTable orderTable = new JTable(new DefaultTableModel());
 
     public JTable getClientsTable()
@@ -40,6 +46,16 @@ public class GUI {
     public void setActionOnRefreshClientsButton(ActionListener actionListener)
     {
         refreshClients.addActionListener(actionListener);
+    }
+
+    public void setActionOnEditClientsButton(ActionListener actionListener)
+    {
+        editClient.addActionListener(actionListener);
+    }
+
+    public void setActionOnEditProductsButton(ActionListener actionListener)
+    {
+        editProduct.addActionListener(actionListener);
     }
 
     public void setActionOnAddClientButton(ActionListener actionListener)

@@ -36,7 +36,9 @@ public class App
 
         Product one = pp.findById(3);
         System.out.println(one.getName());
+        one.setName("Telefon Samsung");
 
+        //pp.update(one);
         //cc.deleteById(15);
         //pp.deleteById(5);
 

@@ -193,8 +193,44 @@ public class AbstractDAO<T> {
         }
     }
 
-    public T update(T t) {
-        // TODO:
-        return t;
+    public void update(T t) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String query = "UPDATE " + type.getSimpleName() + " SET ";
+        Object id = null;
+
+        boolean first = false;
+        for(Field field: t.getClass().getDeclaredFields())
+        {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(t);
+                if(!first)
+                {
+                    first = true;
+                    id = value;
+                }
+                query = query + field.getName() + " ='" + value + "', ";
+
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        query = query.substring(0,query.length() - 2);
+        query = query + " WHERE id = " + id;
+        System.out.println(query);
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.prepareStatement(query);
+            statement.execute();
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, type.getName() + "DAO:update " + e.getMessage());
+        } finally {
+            ConnectionFactory.close(resultSet);
+            ConnectionFactory.close(statement);
+            ConnectionFactory.close(connection);
+        }
     }
 }

@@ -24,7 +24,6 @@ public class TableManager<T> {
         {
             model.addColumn(field.getName());
         }
-
         for(T element: elements)
         {
             LinkedList<Object> data = new LinkedList<>();
@@ -73,6 +72,11 @@ public class TableManager<T> {
     public void deleteFromDatabase(int id)
     {
         abstractDAO.deleteById(id);
+    }
+
+    public void edit(T t)
+    {
+        abstractDAO.update(t);
     }
 
 }
