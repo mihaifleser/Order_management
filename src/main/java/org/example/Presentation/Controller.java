@@ -1,18 +1,20 @@
 package org.example.Presentation;
-
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.example.BusinessLogic.TableManager;
+import org.example.BusinessLogic.Validator;
 import org.example.Model.Client;
 import org.example.Model.OrderP;
 import org.example.Model.Product;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Controller {
     private GUI gui;
@@ -35,12 +37,65 @@ public class Controller {
     private void addClient()
     {
         try {
-            Client client = new Client(addClientGUI.getFirstName(), addClientGUI.getLastName(), addClientGUI.getEmail(), addClientGUI.getTelephone(), addClientGUI.getAdrress());
+            String firstName = addClientGUI.getFirstName();
+            String lastName = addClientGUI.getLastName();
+            String email = addClientGUI.getEmail();
+            String telephone = addClientGUI.getTelephone();
+            String address = addClientGUI.getAdrress();
+            if(!Validator.checkString(firstName) || !Validator.checkString(lastName) || !Validator.checkString(email) || !Validator.checkString(telephone) || !Validator.checkString(address))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: You must complete all fields!");
+                return;
+            }
+            if(!Validator.checkTelephoneNumber(telephone))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: Wrong telephone!");
+                return;
+            }
+            if(!Validator.checkEmail(email))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: Wrong email!");
+                return;
+            }
+
+            Client client = new Client(firstName, lastName, email, telephone, address);
             clientTableManager.insertIntoDatabase(client);
         }catch (Exception exception)
         {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR: Wrong Input");
         }
+    }
+
+    private void generateBill(Client client, Product product, int quantity)
+    {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String dateAndTime = dtf.format(now);
+        dateAndTime = dateAndTime.replace(' ', '_');
+        dateAndTime = dateAndTime.replace(':', '/');
+        dateAndTime = dateAndTime.replace('/', '_');
+        String pdfName = "BILL_" + dateAndTime +".pdf";
+
+        Document document = new Document();
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(pdfName));
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        document.open();
+        Paragraph paragraph = new Paragraph("Client " + client.getFirstName() + " " + client.getLastName() + " has ordered:\n " +
+                product.getName() + " in quantity of " + quantity + " for a total: \n" +
+                product.getPrice() + " x " + quantity +" = "+product.getPrice() * quantity);
+
+        try {
+            document.add(paragraph);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+        document.close();
     }
 
     private void addOrder()
@@ -55,7 +110,11 @@ public class Controller {
                 JOptionPane.showMessageDialog(new JFrame(), "Can't find this client in the database.");
                 return;
             }
-
+            if(!Validator.checkInteger(quantity))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: Wrong Quantity");
+                return;
+            }
             Product product = productTableManager.findById(productId);
             if (product == null) {
                 JOptionPane.showMessageDialog(new JFrame(), "Can't find this product in the database.");
@@ -70,16 +129,7 @@ public class Controller {
             product.setQuantity(product.getQuantity() - quantity);
             productTableManager.edit(product);
 
-            Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream("Bill.pdf"));
-
-            document.open();
-            Paragraph paragraph = new Paragraph("Client " + client.getFirstName() + " " + client.getLastName() + " has ordered:\n " +
-                    product.getName() + " in quantity of " + quantity + " for a total: \n" +
-                    product.getPrice() + " x " + quantity +" = "+product.getPrice() * quantity);
-
-            document.add(paragraph);
-            document.close();
+            generateBill(client,product,quantity);
 
         }catch (Exception exception)
         {
@@ -147,6 +197,23 @@ public class Controller {
             String telephone = value;
             value = gui.getClientsTable().getModel().getValueAt(row, col + 5).toString();
             String address = value;
+
+            if(!Validator.checkString(firstName) || !Validator.checkString(lastName) || !Validator.checkString(email) || !Validator.checkString(telephone) || !Validator.checkString(address))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: You must complete all fields!");
+                return;
+            }
+            if(!Validator.checkTelephoneNumber(telephone))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: Wrong telephone!");
+                return;
+            }
+            if(!Validator.checkEmail(email))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: Wrong email!");
+                return;
+            }
+
             Client c = new Client(id, firstName, lastName, email, telephone, address);
             clientTableManager.edit(c);
         }catch (Exception exception)
@@ -168,6 +235,23 @@ public class Controller {
             int price = Integer.valueOf(value);
             value = gui.getProductsTable().getModel().getValueAt(row, col + 3).toString();
             int quantity = Integer.valueOf(value);
+
+            if(!Validator.checkString(firstName))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: You must give a name to the new product");
+                return;
+            }
+            if(!Validator.checkInteger(quantity))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: Wrong Quantity");
+                return;
+            }
+            if(!Validator.checkInteger(price))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: Wrong Price");
+                return;
+            }
+
             Product p = new Product(id, firstName, price, quantity);
             productTableManager.edit(p);
         }catch (Exception exception)
@@ -179,6 +263,21 @@ public class Controller {
     private void addProduct()
     {
         try {
+            if(!Validator.checkString(addProductGUI.getName()))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: You must give a name to the new product");
+                return;
+            }
+            if(!Validator.checkInteger(Integer.valueOf(addProductGUI.getQuantity())))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: Wrong Quantity");
+                return;
+            }
+            if(!Validator.checkInteger(Integer.valueOf(addProductGUI.getPrice())))
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "ERROR: Wrong Price");
+                return;
+            }
             Product product = new Product(addProductGUI.getName(), Integer.valueOf(addProductGUI.getPrice()), Integer.valueOf(addProductGUI.getQuantity()));
             productTableManager.insertIntoDatabase(product);
         }catch (Exception exception)
