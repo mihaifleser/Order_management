@@ -1,5 +1,7 @@
 package org.example.BusinessLogic;
 
+import org.example.DataAccess.AbstractDAO;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.lang.reflect.Field;

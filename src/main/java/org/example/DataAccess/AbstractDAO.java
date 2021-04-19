@@ -1,4 +1,4 @@
-package org.example.BusinessLogic;
+package org.example.DataAccess;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
@@ -10,16 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.mysql.cj.util.StringUtils;
-import org.example.DataAccess.ConnectionFactory;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 /**
  * @author Mihai Fleser
