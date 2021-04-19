@@ -6,6 +6,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/** @author Mihai Fleser
+ * The main GUI of the application. It is used to control all it's functions and perform all the application's operations.
+ * The user has 3 tabs: The client tab, the product tab and the order tab.
+ * He can insert, delete, edit and view the clients and the products from the database and he can make a new order and
+ * see all orders that have been made.
+ */
+
 public class GUI {
 
     private JFrame frame = new JFrame("Car Parking");

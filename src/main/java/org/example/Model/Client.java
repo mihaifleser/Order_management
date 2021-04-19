@@ -1,5 +1,10 @@
 package org.example.Model;
 
+/** @author Mihai Fleser
+ * Models the client table from the Database. It has only getters and setters.
+ */
+
+
 public class Client {
     private Integer id;
     private String firstName;

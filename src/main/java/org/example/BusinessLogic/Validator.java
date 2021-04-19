@@ -1,8 +1,15 @@
 package org.example.BusinessLogic;
 
+/** @author Mihai Fleser
+ * Is used to validate the input from the GUI.
+ */
 public class Validator {
 
-
+    /**
+     * Checks if an input String is correct.
+     * @param s
+     * @return
+     */
     public static boolean checkString(String s)
     {
         if(s.isEmpty())
@@ -10,12 +17,24 @@ public class Validator {
         return true;
     }
 
+    /**
+     * Checks if an input Integer is correct.
+     * @param input
+     * @return
+     */
+
     public static boolean checkInteger(int input)
     {
         if(input < 0)
             return false;
         return true;
     }
+
+    /**
+     * Checks if the phone number is correct.
+     * @param s
+     * @return
+     */
 
     public static boolean checkTelephoneNumber(String s)
     {
@@ -25,6 +44,12 @@ public class Validator {
             return false;
         return true;
     }
+
+    /**
+     * Checks if the email is correct.
+     * @param s
+     * @return
+     */
 
     public static boolean checkEmail(String s)
     {

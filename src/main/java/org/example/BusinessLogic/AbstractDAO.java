@@ -21,6 +21,12 @@ import org.example.DataAccess.ConnectionFactory;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * @author Mihai Fleser
+ * This class uses reflection tehniques to generate specific queries for accessing the DB.
+ * @param <T>
+ */
+
 public class AbstractDAO<T> {
     protected static final Logger LOGGER = Logger.getLogger(AbstractDAO.class.getName());
 
@@ -32,6 +38,12 @@ public class AbstractDAO<T> {
 
     }
 
+    /**
+     * Creates a basic select query depending on the field given.
+     * @param field - the parameter used in the Where clause
+     * @return  - returns the query generated
+     */
+
     private String createSelectQuery(String field) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT ");
@@ -41,6 +53,11 @@ public class AbstractDAO<T> {
         sb.append(" WHERE " + field + " =?");
         return sb.toString();
     }
+
+    /**
+     * Selects all the rows from a table.
+     * @return - the arrayList of objects created from the rows returned by the query
+     */
 
     public ArrayList<T> findAll() {
         Connection connection = null;
@@ -64,6 +81,12 @@ public class AbstractDAO<T> {
         return null;
     }
 
+    /**
+     * Finds by id a row in a table from the database.
+     * @param id
+     * @return  the object made with that returned row
+     */
+
     public T findById(int id) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -84,6 +107,12 @@ public class AbstractDAO<T> {
         }
         return null;
     }
+
+    /**
+     * Makes an arrayList of objects based on a resultSet from a query.
+     * @param resultSet
+     * @return the ArrayList generated
+     */
 
     private ArrayList<T> createObjects(ResultSet resultSet) {
         ArrayList<T> list = new ArrayList<T>();
@@ -117,6 +146,11 @@ public class AbstractDAO<T> {
             list.add(null);
         return list;
     }
+
+    /**
+     * Inserts into a table from the database a new object.
+     * @param t
+     */
 
     public void insert(T t) {
 
@@ -173,6 +207,11 @@ public class AbstractDAO<T> {
         }
     }
 
+    /**
+     * Deletes an element from a table depending on its id.
+     * @param id
+     */
+
     public void deleteById(int id)
     {
         Connection connection = null;
@@ -193,6 +232,11 @@ public class AbstractDAO<T> {
             ConnectionFactory.close(connection);
         }
     }
+
+    /**
+     * Updates an element from a table in the database.
+     * @param t
+     */
 
     public void update(T t) {
         Connection connection = null;

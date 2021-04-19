@@ -1,5 +1,9 @@
 package org.example.Model;
 
+/** @author Mihai Fleser
+ * Models the Order table from the Database. It has only getters and setters.
+ */
+
 public class OrderP {
     private Integer id;
     private Integer clientId;

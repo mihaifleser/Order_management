@@ -16,6 +16,11 @@ import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**@author Mihai Fleser
+ * This class communicates between the GUIs and Bussiness Logic. It handles the events that happens on the GUI.
+ * It takes the data introduced by the user and transfers it further to the BussinessLogic to manage it.
+ */
+
 public class Controller {
     private GUI gui;
     private AddClientGUI addClientGUI;
@@ -33,6 +38,10 @@ public class Controller {
         this.addProductGUI = new AddProductGUI();
         this.addOrderGUI = new AddOrderGUI();
     }
+
+    /**
+     * Takes the input from the addClientGUI and commands the clientManager to insert the new created client in the database.
+     */
 
     private void addClient()
     {
@@ -66,6 +75,13 @@ public class Controller {
         }
     }
 
+    /**
+     * Generates a new Bill with the client and the product he ordered.
+     * @param client
+     * @param product
+     * @param quantity
+     */
+
     private void generateBill(Client client, Product product, int quantity)
     {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -97,6 +113,10 @@ public class Controller {
         }
         document.close();
     }
+
+    /**
+     * Takes the input from the addOrderGUI and commands the orderManager to insert the new created order in the database.
+     */
 
     private void addOrder()
     {
@@ -138,6 +158,9 @@ public class Controller {
 
     }
 
+    /**
+     * Deletes the selected order from the database.
+     */
     private void deleteOrder()
     {
         try {
@@ -152,6 +175,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Deletes the selected client from the database.
+     */
     private void deleteClient()
     {
         try {
@@ -166,6 +192,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Deletes the selected product from the database.
+     */
     private void deleteProduct()
     {
         try {
@@ -179,6 +208,10 @@ public class Controller {
             JOptionPane.showMessageDialog(new JFrame(), "ERROR: You Must select something to delete");
         }
     }
+
+    /**
+     * Edits the selected client with the new values inserted by the user.
+     */
 
     private void editClient()
     {
@@ -222,6 +255,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Edits the selected product with the new values inserted by the user.
+     */
+
     private void editProduct()
     {
         try {
@@ -260,6 +297,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Takes the input from the addProductGUI and commands the productManager to insert the new created product in the database.
+     */
+
     private void addProduct()
     {
         try {
@@ -286,6 +327,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Sets up the actionListeners on the GUIs.
+     */
 
     public void run()
     {

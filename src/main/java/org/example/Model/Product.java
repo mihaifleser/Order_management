@@ -1,5 +1,9 @@
 package org.example.Model;
 
+/** @author Mihai Fleser
+ * Models the product table from the Database. It has only getters and setters
+ */
+
 public class Product {
     private Integer id;
     private String name;

@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/** @author Mihai Fleser
+ * This class represents a GUI that the user must use in order to insert a new product in the database.
+ */
+
 public class AddProductGUI {
 
     private JFrame frame = new JFrame("Insert new Product");

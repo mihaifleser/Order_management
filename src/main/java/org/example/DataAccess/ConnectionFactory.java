@@ -8,6 +8,10 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/** @author Mihai Fleser
+ * Connects to the database from the MySql server.
+ */
+
 public class ConnectionFactory {
 
     private static final Logger LOGGER = Logger.getLogger(ConnectionFactory.class.getName());
